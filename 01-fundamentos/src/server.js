@@ -1,28 +1,27 @@
 import { randomUUID } from "crypto";
 import http from "http";
+import { json } from "./middlewares/json.js";
 
 const user = [];
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const { method, url } = req;
 
-  if (method === "GET" && url === "/users") {
-    return res
-      .setHeader("content-type", "application-json")
-      .writeHead(200)
-      .end(JSON.stringify(user));
-  }
+  await json(req, res);
 
+  if (method === "GET" && url === "/users") {
+    return res.writeHead(200).end(JSON.stringify(user));
+  }
+  console.log(req.body);
   if (method === "POST" && url === "/users") {
+    const { name, email } = req.body;
     user.push({
-      name: "Lucas",
+      name,
       id: randomUUID(),
-      idade: 29,
+      email,
     });
-    return res
-      .setHeader("content-type", "application-json")
-      .writeHead(201)
-      .end(JSON.stringify(user));
+
+    return res.writeHead(201).end();
   }
 
   return res.writeHead(404).end("Not found");
