@@ -5,7 +5,7 @@ import { debug } from "console";
 import { checkSessionId } from "../middlewares/check-session-id";
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.post("/", { preHandler: [checkSessionId] }, async (request, response) => {
+  app.post("/", async (request, response) => {
     const transaction = postTransactionsSquema.parse(request.body);
 
     const { title, amount, type } = transaction;
