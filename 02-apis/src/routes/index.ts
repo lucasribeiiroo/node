@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { knex } from "../database";
 import { getTransactionsSquema, postTransactionsSquema } from "./schemas";
-import { debug } from "console";
 import { checkSessionId } from "../middlewares/check-session-id";
 
 export async function transactionsRoutes(app: FastifyInstance) {
