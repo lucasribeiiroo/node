@@ -7,7 +7,9 @@
     "lint": "eslint src -ext .ts --fix",
     "knex": "node --import tsx ./node_modules/knex/bin/cli.js",
     "test": "vitest",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "test:c": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "author": "",
   "license": "ISC",
@@ -15,11 +17,15 @@
   "devDependencies": {
     "@types/bcryptjs": "2.4.6",
     "@types/node": "22.8.4",
+    "@vitest/coverage-v8": "2.1.4",
+    "@vitest/ui": "2.1.4",
     "dotenv": "16.4.5",
     "prisma": "5.21.1",
     "tsup": "8.3.5",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
+    "vite-tsconfig-paths": "5.0.1",
+    "vitest": "2.1.4",
     "zod": "3.23.8"
   },
   "dependencies": {
