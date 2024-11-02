@@ -5,3 +5,8 @@ export const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
+
+export const authUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
