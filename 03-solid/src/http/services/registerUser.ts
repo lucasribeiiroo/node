@@ -1,7 +1,6 @@
-import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { ICreateUser, IRegisterUser } from "./interfaces";
-import { IUserRepository } from "@/http/repositories/interfaces/userRepository";
+import { IUserRepository } from "@/http/repositories/interfaces";
 import { EmailAlreadyExistsError } from "./errors/email-exists";
 
 export class RegisterUser {

@@ -1,15 +1,13 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { createUserSchema } from "@/schemas";
-import { RegisterUser } from "@/http/services/registerUser";
-import { UserRepository } from "@/http/repositories/userRepository";
 import { EmailAlreadyExistsError } from "@/http/services/errors/email-exists";
+import { makeRegisterService } from "@/http/services/factories/make-register-service";
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const { name, password, email } = createUserSchema.parse(request.body);
 
   try {
-    const userRepository = new UserRepository();
-    const registerUser = new RegisterUser(userRepository);
+    const registerUser = makeRegisterService();
     await registerUser.create({
       name,
       email,

@@ -1,16 +1,7 @@
-import { User } from "@prisma/client";
-import { IUserRepository } from "../repositories/interfaces/userRepository";
+import { IUserRepository } from "../repositories/interfaces";
 import { InvalidCredentialsError } from "./errors/invalid-credentials";
 import { compare } from "bcryptjs";
-
-interface IAuthServiceRequest {
-  email: string;
-  password: string;
-}
-
-interface IAuthServiceResponse {
-  user: User;
-}
+import { IAuthServiceRequest, IAuthServiceResponse } from "./interfaces";
 
 export class AuthService {
   constructor(private userRepository: IUserRepository) {}
@@ -24,7 +15,7 @@ export class AuthService {
       throw new InvalidCredentialsError();
     }
 
-    const doesPasswordMatches = compare(password, user.password_hash);
+    const doesPasswordMatches = await compare(password, user.password_hash);
 
     if (!doesPasswordMatches) {
       throw new InvalidCredentialsError();

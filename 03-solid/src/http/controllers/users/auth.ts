@@ -1,16 +1,15 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { authUserSchema } from "@/schemas";
-import { UserRepository } from "@/http/repositories/userRepository";
-import { AuthService } from "@/http/services/auth";
+
 import { InvalidCredentialsError } from "@/http/services/errors/invalid-credentials";
+import { makeAuthService } from "@/http/services/factories/make-auth-service";
 
 export async function auth(request: FastifyRequest, reply: FastifyReply) {
   const { password, email } = authUserSchema.parse(request.body);
 
   try {
-    const userRepository = new UserRepository();
-    const registerUser = new AuthService(userRepository);
-    await registerUser.execute({
+    const authService = makeAuthService();
+    await authService.execute({
       email,
       password,
     });
