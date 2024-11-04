@@ -35,8 +35,6 @@ describe("Search Nearby Gyms Service", () => {
       userLongitude: -49.6401091,
     });
 
-    console.log(result);
-
     expect(result.gyms).toHaveLength(1);
     expect(result.gyms).toEqual([
       expect.objectContaining({ title: "Near Gym" }),
