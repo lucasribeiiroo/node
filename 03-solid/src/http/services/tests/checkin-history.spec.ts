@@ -1,6 +1,6 @@
+import { InMemoryCheckInRepository } from "@/http/repositories/in-memory/in-memory-checkIn-repository";
 import { describe, it, expect, beforeEach } from "vitest";
-import { InMemoryCheckInRepository } from "../repositories/in-memory/in-memory-checkIn-repository";
-import { CheckInHistoryService } from "./checkIn-history";
+import { CheckInHistoryService } from "../checkIn-history";
 
 let inMemoryCheckInRepository: InMemoryCheckInRepository;
 let sut: CheckInHistoryService;

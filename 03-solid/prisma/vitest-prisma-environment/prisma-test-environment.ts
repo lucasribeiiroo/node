@@ -19,9 +19,6 @@ export default <Environment>{
   transformMode: "ssr",
 
   setup() {
-    // custom setup
-    console.log("Executou");
-
     const schemaId = crypto.randomUUID();
 
     const newDatabaseURL = generateDatabaseURL(schemaId);
@@ -32,8 +29,9 @@ export default <Environment>{
 
     return {
       async teardown() {
-        console.log("Teardown");
-        // called after all tests with this env have been run
+        await prisma.$executeRaw`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`;
+
+        await prisma.$disconnect();
       },
     };
   },

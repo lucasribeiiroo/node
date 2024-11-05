@@ -1,10 +1,9 @@
+import { IUserRepository } from "@/http/repositories/interfaces";
 import { describe, it, expect, beforeEach } from "vitest";
-import { UserRepository } from "../repositories/userRepository";
-import { RegisterUser } from "./registerUser";
+import { RegisterUser } from "../registerUser";
+import { EmailAlreadyExistsError } from "../errors/email-exists";
+import { InMemoryUserRepository } from "@/http/repositories/in-memory/in-memory-user-repository";
 import { compare } from "bcryptjs";
-import { InMemoryUserRepository } from "../repositories/in-memory/in-memory-user-repository";
-import { EmailAlreadyExistsError } from "./errors/email-exists";
-import { IUserRepository } from "../repositories/interfaces";
 
 let inMemoryUserRepository: IUserRepository;
 let sut: RegisterUser;

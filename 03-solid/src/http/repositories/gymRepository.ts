@@ -3,8 +3,13 @@ import { IGymRepository } from "./interfaces";
 import { Gym, Prisma } from "@prisma/client";
 
 export class GymRepository implements IGymRepository {
-  async findNearbyGyms(latitude: number, longitude: number): Promise<Gym[]> {
-    throw new Error("Method not implemented.");
+  async findNearbyGyms(latitude: number, longitude: number) {
+    const gyms = await prisma.$queryRaw<Gym[]>`
+      SELECT * from gyms
+      WHERE ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+    `;
+
+    return gyms;
   }
 
   async findById(id: string) {

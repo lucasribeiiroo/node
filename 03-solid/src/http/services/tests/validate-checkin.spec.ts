@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { InMemoryCheckInRepository } from "../repositories/in-memory/in-memory-checkIn-repository";
-import { ValidateCheckinService } from "./validate-checkin";
-import { ResourceNotFoundError } from "./errors/resource-not-found";
-import { CheckInLimitTimeError } from "./errors/check-in-limit";
+import { InMemoryCheckInRepository } from "../../repositories/in-memory/in-memory-checkIn-repository";
+import { ValidateCheckinService } from "../validate-checkin";
+import { ResourceNotFoundError } from "../errors/resource-not-found";
+import { CheckInLimitTimeError } from "../errors/check-in-limit";
 
 let inMemoryCheckInRepository: InMemoryCheckInRepository;
 

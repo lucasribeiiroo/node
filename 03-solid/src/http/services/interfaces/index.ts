@@ -11,8 +11,8 @@ export interface IRegisterUser {
 }
 export interface ICreateGymRequest {
   title: string;
-  description: string;
-  phone: string;
+  description?: string | null;
+  phone?: string | null;
   latitude: number;
   longitude: number;
 }

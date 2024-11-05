@@ -1,8 +1,6 @@
+import { InMemoryGymRepository } from "@/http/repositories/in-memory/in-memory-gym-repository";
 import { describe, it, expect, beforeEach } from "vitest";
-
-import { InMemoryGymRepository } from "../repositories/in-memory/in-memory-gym-repository";
-
-import { SearchGymService } from "./search-gym";
+import { SearchGymService } from "../search-gym";
 
 let inMemoryGymRepository: InMemoryGymRepository;
 let sut: SearchGymService;
