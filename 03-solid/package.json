@@ -6,7 +6,8 @@
     "dev": "tsx watch src/server.ts",
     "lint": "eslint src -ext .ts --fix",
     "knex": "node --import tsx ./node_modules/knex/bin/cli.js",
-    "test": "vitest",
+    "test": "vitest run --dir src/http/services",
+    "test:e2e": "vitest run --dir src/http/controllers",
     "build": "tsup src --out-dir build",
     "test:c": "vitest run --coverage",
     "test:ui": "vitest --ui"
