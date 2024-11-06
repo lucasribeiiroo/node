@@ -1,32 +1,63 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import { authUserSchema } from "@/schemas";
-
+import { FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
 import { InvalidCredentialsError } from "@/http/services/errors/invalid-credentials";
 import { makeAuthService } from "@/http/services/factories/make-auth-services";
 
 export async function auth(request: FastifyRequest, reply: FastifyReply) {
-  const { password, email } = authUserSchema.parse(request.body);
+  const authenticateBodySchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+  });
+
+  const { email, password } = authenticateBodySchema.parse(request.body);
 
   try {
-    const authService = makeAuthService();
-    const { user } = await authService.execute({
+    const authenticateUseCase = makeAuthService();
+
+    const { user } = await authenticateUseCase.execute({
       email,
       password,
     });
 
     const token = await reply.jwtSign(
-      {},
+      {
+        role: user.role,
+      },
       {
         sign: {
           sub: user.id,
         },
       }
     );
-    return reply.status(200).send({ token });
+
+    const refreshToken = await reply.jwtSign(
+      {
+        role: user.role,
+      },
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: "7d",
+        },
+      }
+    );
+
+    return reply
+      .setCookie("refreshToken", refreshToken, {
+        path: "/",
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
+        token,
+      });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
-      reply.status(400).send({ message: err.message });
+      return reply.status(400).send({ message: err.message });
     }
-    reply.status(500).send();
+
+    throw err;
   }
 }
